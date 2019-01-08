@@ -12,6 +12,7 @@
 
     body {
       font: 13px Helvetica, Arial;
+      position: relative;
     }
 
     form {
@@ -51,7 +52,17 @@
     }
 
     #messages {
-      margin-bottom: 40px
+      margin-bottom: 100px
+    }
+    .active{
+      position: fixed;
+      top: 20%;
+      left: 40%;
+      padding: 100px 110px 100px 100px;
+      transition: .1s;
+    }
+    .active:hover{
+      box-shadow: 1px 1px 5px black;
     }
   </style>
 </head>
@@ -60,29 +71,29 @@
   <ul id="messages"></ul>
   <form action="">
     <input type="text" id="name" value="Your name">
-    <input id="m" autocomplete="off" placeholder="Message" /><button>Send</button>
+    <input id="m" autocomplete="off" placeholder="Message" /><button class="active">Go</button>
   </form>
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
+    // document.getElementsByTagName('button')[0].click();
     $(function () {
       var socket = io();
-
+      document.getElementsByClassName('active')[0].onclick = function() {
+        this.className = '';
+      }
       $('form').submit(function () {
         const val = $('#name').val() + ": " + $('#m').val()
         socket.emit('chat message', val);
         $('#m').val('');
         return false;
       });
-
-      // //Socket nhận data và append vào giao diện
-      // socket.on("send", function (data) {
-      //   console.log(data);
-      //   $("#content").append("<p class='message'>" + data.username + ": " + data.message + "</p>")
-      // })
-
       socket.on('chat message', function (data) {
-        $('#messages').append($('<li>').text(data));
+        let listMess = '';
+        data.forEach(dat => {
+          listMess += '<li>' + dat.message + '</li>';
+          document.getElementById('messages').innerHTML = listMess;
+        });
         window.scrollTo(0, document.body.scrollHeight);
       });
     });
