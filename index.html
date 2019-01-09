@@ -90,6 +90,23 @@
       box-shadow: 0 0 10px gray;
       background: white;
     }
+    .private-chat{
+      text-decoration: none;
+      position: fixed;
+      top: 2px;
+      padding: 10px;
+      color: blue;
+      right: 10px; 
+      z-index: 10;
+      font-size: 15px;
+      transition: .3s;
+      border: 1px solid blue;
+
+    }
+    .private-chat:hover{
+      background: blue;
+      color: white;
+    }
     /* @media only screen and (min-width: 768px){
         form input{
           padding: 30px;
@@ -120,6 +137,7 @@
 </head>
 
 <body>
+  <a href="https://app-chat-private.herokuapp.com/" class="private-chat">Chat Private</a>
   <h2 class="header">Chat App</h2>
   <ul id="messages"></ul>
   <form action="">
