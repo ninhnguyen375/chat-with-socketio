@@ -21,7 +21,9 @@ app.get('/', function(req, res){
 
 io.on('connection', async function(socket){
   socket.on('chat message', async function(msg){
-    await Mess.insertMany({message: msg});
+    if (msg != "Name: Nhấn 'Go' để bắt đầu!")
+      await Mess.insertMany({message: msg});
+    
     let newMess = await Mess.find();
     io.emit('chat message', newMess);
   });

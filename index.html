@@ -2,9 +2,12 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Socket.IO chat</title>
   <style>
     * {
+      outline: none;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -18,25 +21,27 @@
     form {
       background: #000;
       padding: 3px;
-      position: fixed;
       bottom: 0;
       width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
     }
 
     form input {
       border: 0;
       padding: 10px;
-      width: 90%;
+      width: 100%;
       margin-right: .5%;
     }
 
     form button {
-      width: 9%;
-      background: rgb(130, 224, 255);
+      width: 100%;
+      background: black;
       border: none;
+      color:white;
       padding: 10px;
     }
-
     #messages {
       list-style-type: none;
       margin: 0;
@@ -44,7 +49,8 @@
     }
 
     #messages li {
-      padding: 5px 10px;
+      padding: 10px;
+
     }
 
     #messages li:nth-child(odd) {
@@ -52,25 +58,72 @@
     }
 
     #messages {
-      margin-bottom: 100px
+      margin-bottom: 115px;
+      margin-top: 10px;
     }
     .active{
       position: fixed;
-      top: 20%;
-      left: 40%;
-      padding: 100px 110px 100px 100px;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      padding: 40px 140px 40px 100px;
       transition: .1s;
+      /* border: 1px solid rgb(138, 138, 138); */
+      font-size: 30px;
+      background: white;
+      color: rgb(122, 122, 122);
+      box-shadow: 0px 0px 15px rgb(151, 151, 151);
+      width: 9%;
     }
     .active:hover{
-      box-shadow: 1px 1px 5px black;
+      box-shadow: 0px 0px 15px rgb(98, 219, 98);
+      color:rgb(98, 219, 98);
     }
+    .header{
+      text-align: center;
+      position: fixed;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      top: 0;
+      width: 100%;
+      color:gray;
+      box-shadow: 0 0 10px gray;
+      background: white;
+    }
+    /* @media only screen and (min-width: 768px){
+        form input{
+          padding: 30px;
+          font-size: 30px;
+          overflow: auto;
+        }
+        form button{
+          width: 100%;
+          padding: 30px;
+          color: white;
+          background:black;
+          font-size: 30px;
+          outline: none;
+          border: 0;
+        }
+        form input{
+          width: 100%;
+        }
+        #messages li{
+          font-size: 30px;
+          padding: 50px 20px;
+        }
+        #messages {
+          
+        }
+    } */
   </style>
 </head>
 
 <body>
+  <h2 class="header">Chat App</h2>
   <ul id="messages"></ul>
   <form action="">
-    <input type="text" id="name" value="Your name">
+    <input type="text" id="name" value="Name">
     <input id="m" autocomplete="off" placeholder="Message" /><button class="active">Go</button>
   </form>
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -79,8 +132,10 @@
     // document.getElementsByTagName('button')[0].click();
     $(function () {
       var socket = io();
-      document.getElementsByClassName('active')[0].onclick = function() {
+      $("#m").val("Nhấn 'Go' để bắt đầu!")
+      document.getElementsByClassName('active')[0].onclick = function () {
         this.className = '';
+        this.innerHTML = 'Gửi'
       }
       $('form').submit(function () {
         const val = $('#name').val() + ": " + $('#m').val()
